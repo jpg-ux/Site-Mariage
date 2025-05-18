@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Vidéos - Mariage</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .video-thumbnails {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .video-item {
+            cursor: pointer;
+            text-align: center;
+        }
+        .video-item img {
+            width: 250px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="photos.html">Photos</a> |
+        <a href="videos.html">Vidéos</a> |
+        <a href="commentaires.html">Commentaires</a>
+    </nav>
+
+    <div class="container">
+        <h1>Vidéos du Mariage</h1>
+        <div class="video-thumbnails">
+            <div class="video-item" onclick="openModal('videos/video1.mp4')">
+                <img src="videos/mini_video1.jpg" alt="Miniature 1">
+                <p>Préparatifs</p>
+            </div>
+            <div class="video-item" onclick="openModal('videos/video2.mp4')">
+                <img src="videos/mini_video2.jpg" alt="Miniature 2">
+                <p>Cérémonie civile</p>
+            </div>
+            <div class="video-item" onclick="openModal('videos/video3.mp4')">
+                <img src="videos/mini_video3.jpg" alt="Miniature 3">
+                <p>Arrivée des invités</p>
+            </div>
+            <div class="video-item" onclick="openModal('videos/video4.mp4')">
+                <img src="videos/mini_video4.jpg" alt="Miniature 4">
+                <p>Cérémonie laïque</p>
+            </div>
+            <div class="video-item" onclick="openModal('videos/video5.mp4')">
+                <img src="videos/mini_video5.jpg" alt="Miniature 5">
+                <p>Échange des vœux</p>
+            </div>
+            <div class="video-item" onclick="openModal('videos/video6.mp4')">
+                <img src="videos/mini_video6.jpg" alt="Miniature 6">
+                <p>Sortie des mariés</p>
+            </div>
+            <div class="video-item" onclick="openModal('videos/video7.mp4')">
+                <img src="videos/mini_video7.jpg" alt="Miniature 7">
+                <p>Photos de groupe</p>
+            </div>
+            <div class="video-item" onclick="openModal('videos/video8.mp4')">
+                <img src="videos/mini_video8.jpg" alt="Miniature 8">
+                <p>Cocktail</p>
+            </div>
+            <div class="video-item" onclick="openModal('videos/video9.mp4')">
+                <img src="videos/mini_video9.jpg" alt="Miniature 9">
+                <p>Décoration salle</p>
+            </div>
+            <div class="video-item" onclick="openModal('videos/video10.mp4')">
+                <img src="videos/mini_video10.jpg" alt="Miniature 10">
+                <p>Entrée des mariés</p>
+            </div>
+            <div class="video-item" onclick="openModal('videos/video11.mp4')">
+                <img src="videos/mini_video11.jpg" alt="Miniature 11">
+                <p>Discours</p>
+            </div>
+            <div class="video-item" onclick="openModal('videos/video12.mp4')">
+                <img src="videos/mini_video12.jpg" alt="Miniature 12">
+                <p>Repas</p>
+            </div>
+            <div class="video-item" onclick="openModal('videos/video13.mp4')">
+                <img src="videos/mini_video13.jpg" alt="Miniature 13">
+                <p>Animations</p>
+            </div>
+            <div class="video-item" onclick="openModal('videos/video14.mp4')">
+                <img src="videos/mini_video14.jpg" alt="Miniature 14">
+                <p>Ouverture de bal</p>
+            </div>
+            <div class="video-item" onclick="openModal('videos/video15.mp4')">
+                <img src="videos/mini_video15.jpg" alt="Miniature 15">
+                <p>Soirée dansante</p>
+            </div>
+            <div class="video-item" onclick="openModal('videos/video16.mp4')">
+                <img src="videos/mini_video16.jpg" alt="Miniature 16">
+                <p>Dessert</p>
+            </div>
+            <div class="video-item" onclick="openModal('videos/video17.mp4')">
+                <img src="videos/mini_video17.jpg" alt="Miniature 17">
+                <p>Feu d’artifice</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modale vidéo -->
+    <div id="video-modal" class="hidden" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;z-index:9999;">
+        <div style="position:relative;max-width:80%;">
+            <button onclick="closeModal()" style="position:absolute;top:10px;right:10px;font-size:20px;">✖</button>
+            <video id="modal-video" width="100%" controls autoplay>
+                <source src="" type="video/mp4">
+                Votre navigateur ne prend pas en charge la lecture vidéo.
+            </video>
+        </div>
+    </div>
+
+    <script>
+        function openModal(videoSrc) {
+            const modal = document.getElementById("video-modal");
+            const player = document.getElementById("modal-video");
+            player.querySelector("source").src = videoSrc;
+            player.load();
+            modal.classList.remove("hidden");
+        }
+
+        function closeModal() {
+            const modal = document.getElementById("video-modal");
+            const player = document.getElementById("modal-video");
+            player.pause();
+            player.querySelector("source").src = "";
+            player.load();
+            modal.classList.add("hidden");
+        }
+    </script>
+</body>
+</html>

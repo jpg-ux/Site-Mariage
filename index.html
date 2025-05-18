@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mariage Déborah & Aurélien</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container" id="container">
+        <h1><img src="photos/logo_mariage.png" alt="Logo Mariage" style="width:150px;"><br>Mariage Déborah & Aurélien</h1>
+        <h2>Bienvenue à tous !</h2>
+        <p>Merci d’avoir partagé ce moment unique avec nous. Voici quelques souvenirs du mariage. 
+        N’hésitez pas à laisser un petit mot dans les commentaires en bas de page !</p>
+        
+        <div id="auth">
+          <label for="password">Veuillez entrer le Mot de passe :</label>
+          <input type="password" id="password" />
+          <button onclick="checkPassword()">Valider</button>
+          <p id="error" class="hidden" style="color:red;">Mot de passe incorrect</p>
+        </div>
+        
+        <div id="nav-links" class="hidden">
+          <ul>
+            <li><a href="photos.html">📸 Photos</a></li>
+            <li><a href="videos.html">🎥 Vidéos</a></li>
+            <li><a href="commentaires.html">💬 Commentaires</a></li>
+          </ul>
+        </div>
+      </div>
+
+        <script>
+          const CORRECT_PASSWORD = "1234"; // remplace par le vrai mot de passe
+      
+          function checkPassword() {
+            const input = document.getElementById("password").value;
+            const error = document.getElementById("error");
+            if (input === CORRECT_PASSWORD) {
+              document.getElementById("auth").style.display = "none";
+              document.getElementById("nav-links").style.display = "block";
+            } else {
+              error.classList.remove("hidden");
+            }
+          }
+        </script>
+</body>
+</html>
