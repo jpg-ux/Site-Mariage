@@ -1,0 +1,2 @@
+└── mariés.jpg             --> Image affichée à l'ouverture
+└── logo de index
