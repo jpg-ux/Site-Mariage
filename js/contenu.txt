@@ -1,0 +1,9 @@
+fichier contenant 
+    ├── diapo.js                --> Logique du diaporama + lightbox
+│   ├── lightbox.js             --> Affichage image plein écran
+│   ├── mairie.js               --> Liste d'images (URL Nextcloud)
+│   ├── eglise.js
+│   ├── vin.js
+│   ├── fete.js
+│   ├── couples.js
+│
