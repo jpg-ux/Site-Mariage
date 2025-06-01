@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>⛪ Eglise</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="topbar">
-    <a href="photo.html" class="btn-retour">← Retour</a>
-    <button id="diaporama-btn">▶ Diaporama</button>
-    <button id="diaporama-pause">⏸ Pause</button>
-    <button id="diaporama-lent">🐢 Lent</button>
-    <button id="diaporama-rapide">🐇 Rapide</button>
+  <header>
+    <h1>Photos de la mairie</h1>
+    <nav class="top-bar">
+      <button id="diaporama-btn">▶️ Diaporama</button>
+      <button id="diaporama-pause">⏸️ Pause</button>
+      <button id="diaporama-lent">🐢 Lent</button>
+      <button id="diaporama-rapide">🐇 Rapide</button>
+      <button onclick="window.location.href='photo.html'">← Retour à toutes les photos</button>
+    </nav>
   </header>
 
-  <main class="main-content">
-    <section id="photo-principale">
-      <img src="photos/accueil.jpg" alt="Photo des mariés" class="grande-photo" />
-    </section>
-    <section id="miniatures" class="miniatures"></section>
+  <main>
+    <div id="miniatures" class="gallery"></div>
+
+    <div id="lightbox" class="lightbox hidden">
+      <span id="lightbox-close" class="close-btn">✖</span>
+      <img src="" alt="Photo en grand">
+    </div>
   </main>
 
-  <div id="lightbox" class="lightbox hidden">
-    <span id="lightbox-close" class="close">✖</span>
-    <img src="" alt="Photo en grand" />
-  </div>
-
-  <script src="photoList.js"></script>
-  <script src="lightbox-diapo.js"></script>
+  <script src="js/photoList-mairie.js"></script>
+  <script src="js/lightbox-diapo.js"></script>
 </body>
 </html>
