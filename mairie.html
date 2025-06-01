@@ -2,48 +2,30 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Photos du mariage</title>
+  <title>Photos - Mairie</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Menu latéral gauche -->
-  <aside class="sidebar">
-    <nav>
-      <ul>
-        <li><a href="mairie.html">📍 Mairie</a></li>
-        <li><a href="eglise.html">⛪ Église</a></li>
-        <li><a href="vin.html">🥂 Vin d’honneur</a></li>
-        <li><a href="fete.html">🎉 Fête</a></li>
-        <li><a href="couples.html">💞 Les couples</a></li>
-      </ul>
-    </nav>
-  </aside>
+  <!-- Barre haute avec boutons -->
+  <header class="topbar">
+    <button onclick="window.location.href='photo.html'">⬅ Retour à l'accueil</button>
+    <div class="controls">
+      <button id="btn-play-pause">⏸ Pause</button>
+      <button id="btn-slow">🐢 Lent</button>
+      <button id="btn-normal">⏱ Normal</button>
+      <button id="btn-fast">⚡ Rapide</button>
+      <span id="compteur">0 / 0</span>
+    </div>
+  </header>
 
-  <!-- Contenu principal -->
-  <main class="main-content">
+  <!-- Grande photo d'accueil -->
+  <section id="photo-principale">
+    <img src="photos/accueil.jpg" alt="Photo des mariés" class="grande-photo">
+  </section>
 
-    <!-- Barre haute avec bouton diaporama -->
-    <header class="topbar">
-      <button id="diaporama-btn" onclick="window.location.href='diaporama.html'">Lancer le diaporama</button>
-      <div class="top-links">
-        <a href="mairie.html">Mairie</a>
-        <a href="eglise.html">Église</a>
-        <a href="vin.html">Vin d’honneur</a>
-        <a href="fete.html">Fête</a>
-        <a href="couples.html">Couples</a>
-      </div>
-    </header>
-
-    <!-- Grande photo d'accueil -->
-    <section id="photo-principale">
-      <img src="photos/accueil.jpg" alt="Photo des mariés" class="grande-photo">
-    </section>
-
-    <!-- Miniatures -->
-    <section id="miniatures" class="miniatures"></section>
-
-  </main>
+  <!-- Miniatures avec diaporama -->
+  <section id="diaporama" class="miniatures"></section>
 
   <!-- Lightbox -->
   <div id="lightbox" class="lightbox hidden">
@@ -52,40 +34,141 @@
   </div>
 
   <script src="photoList.js"></script>
-  <script src="lightbox.js"></script>
   <script>
-    const miniaturesDiv = document.getElementById("miniatures");
-    const photoPrincipale = document.getElementById("photo-principale");
+    const extensions = [".jpg", ".jpeg", ".png", ".webp", ".gif"];
+    const vitesses = {
+      slow: 8000,
+      normal: 4000,
+      fast: 1500
+    };
 
-    photoList.forEach(photo => {
-      // Ignorer la photo d’accueil (affichée en grand au-dessus)
-      if (photo === "accueil.jpg") return;
+    let images = [];
+    let imageIndex = 0;
+    let intervalDiapo;
+    let lectureAutomatique = true;
+    let vitesseActuelle = vitesses.normal;
 
-      const img = document.createElement("img");
-      img.src = "photos/" + photo;
-      img.alt = "Photo du mariage";
-      img.addEventListener("click", () => {
-        openLightbox(img.src);
+    const diaporama = document.getElementById("diaporama");
+    const compteur = document.getElementById("compteur");
+    const btnPlayPause = document.getElementById("btn-play-pause");
+    const btnSlow = document.getElementById("btn-slow");
+    const btnNormal = document.getElementById("btn-normal");
+    const btnFast = document.getElementById("btn-fast");
+
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = lightbox.querySelector("img");
+    const lightboxClose = document.getElementById("lightbox-close");
+
+    function chargerImages() {
+      images = photoList.slice().sort((a, b) => a.localeCompare(b));
+      images = images.filter(src => src !== "accueil.jpg");
+
+      images.forEach(src => {
+        const img = document.createElement("img");
+        img.src = "photos/" + src;
+        img.alt = "Photo mairie";
+        img.setAttribute("tabindex", "-1");
+        diaporama.appendChild(img);
+
+        // Lightbox au clic
+        img.addEventListener("click", () => ouvrirLightbox(img.src));
+
+        // Hover : affichage plus grand (via CSS)
       });
-      miniaturesDiv.appendChild(img);
-    });
 
-    function openLightbox(src) {
-      const lightbox = document.getElementById("lightbox");
-      const lightboxImg = lightbox.querySelector("img");
-      lightboxImg.src = src;
-      lightbox.classList.remove("hidden");
+      if (images.length > 0) {
+        afficherImage(0);
+        demarrerDiaporama();
+      } else {
+        compteur.textContent = "0 / 0";
+      }
     }
 
-    document.getElementById("lightbox-close").addEventListener("click", () => {
-      document.getElementById("lightbox").classList.add("hidden");
-    });
+    function afficherImage(index) {
+      const allImages = diaporama.querySelectorAll("img");
+      allImages.forEach((img, i) => {
+        img.classList.toggle("active", i === index);
+      });
+      compteur.textContent = `${index + 1} / ${images.length}`;
+      imageIndex = index;
+    }
 
-    document.getElementById("lightbox").addEventListener("click", (e) => {
-      if (e.target.id === "lightbox") {
-        e.currentTarget.classList.add("hidden");
+    function imageSuivante() {
+      imageIndex = (imageIndex + 1) % images.length;
+      afficherImage(imageIndex);
+    }
+
+    function demarrerDiaporama() {
+      lectureAutomatique = true;
+      btnPlayPause.textContent = "⏸ Pause";
+      clearInterval(intervalDiapo);
+      intervalDiapo = setInterval(imageSuivante, vitesseActuelle);
+    }
+
+    function arreterDiaporama() {
+      lectureAutomatique = false;
+      btnPlayPause.textContent = "▶ Lecture";
+      clearInterval(intervalDiapo);
+    }
+
+    btnPlayPause.addEventListener("click", () => {
+      if (lectureAutomatique) {
+        arreterDiaporama();
+      } else {
+        demarrerDiaporama();
       }
     });
+
+    btnSlow.addEventListener("click", () => {
+      vitesseActuelle = vitesses.slow;
+      if (lectureAutomatique) demarrerDiaporama();
+    });
+
+    btnNormal.addEventListener("click", () => {
+      vitesseActuelle = vitesses.normal;
+      if (lectureAutomatique) demarrerDiaporama();
+    });
+
+    btnFast.addEventListener("click", () => {
+      vitesseActuelle = vitesses.fast;
+      if (lectureAutomatique) demarrerDiaporama();
+    });
+
+    // Lightbox
+    function ouvrirLightbox(src) {
+      lightboxImg.src = src;
+      lightbox.classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+      lightboxClose.focus();
+    }
+
+    function fermerLightbox() {
+      lightbox.classList.add("hidden");
+      lightboxImg.src = "";
+      document.body.style.overflow = "";
+    }
+
+    lightboxClose.addEventListener("click", fermerLightbox);
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) fermerLightbox();
+    });
+
+    // Clavier
+    document.addEventListener("keydown", (e) => {
+      if (lightbox.style.display === "flex" || !lectureAutomatique) return;
+
+      switch (e.key) {
+        case "ArrowRight":
+          imageSuivante();
+          break;
+        case " ":
+          e.preventDefault();
+          lectureAutomatique ? arreterDiaporama() : demarrerDiaporama();
+          break;
+      }
+    });
+
+    chargerImages();
   </script>
 </body>
 </html>
