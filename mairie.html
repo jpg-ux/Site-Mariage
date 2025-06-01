@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Photos Mairie</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="js/mairie.js" defer></script>
+  <script src="js/diapo.js" defer></script>
+  <script src="js/lightbox.js" defer></script>
+</head>
+<body>
+  <div class="menu-lateral">
+    <h2>Catégories</h2>
+    <ul>
+      <li><a href="mairie.html">Mairie</a></li>
+      <li><a href="eglise.html">Église</a></li>
+      <li><a href="vin.html">Vin d'honneur</a></li>
+      <li><a href="fete.html">Fête</a></li>
+      <li><a href="couples.html">Couples</a></li>
+    </ul>
+  </div>
+
+  <div class="contenu-central">
+    <div class="barre-haute">
+      <button id="btn-play-pause">⏸ Pause</button>
+      <button id="btn-slow">🐢 Lent</button>
+      <button id="btn-normal">⚖ Normal</button>
+      <button id="btn-fast">🐇 Rapide</button>
+      <button id="btn-fullscreen">⛶ Plein écran</button>
+      <button id="btn-home">🏠 Accueil</button>
+      <span id="compteur"></span>
+    </div>
+
+    <div class="gallery" id="diaporama"></div>
+  </div>
+
+  <div id="lightbox" class="modal hidden">
+    <span id="lightbox-close" class="close">×</span>
+    <div class="modal-content">
+      <img src="" alt="agrandissement">
+    </div>
+  </div>
+</body>
+</html>
