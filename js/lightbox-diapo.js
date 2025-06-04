@@ -1,11 +1,10 @@
-// Script commun : lightbox + diaporama
+// Script commun : lightbox + diaporama (version objets {thumb, url})
 document.addEventListener("DOMContentLoaded", () => {
   const miniaturesDiv = document.getElementById("miniatures");
   const lightbox = document.getElementById("lightbox");
   const lightboxImg = lightbox?.querySelector("img");
   const closeBtn = document.getElementById("lightbox-close");
 
-  // Diaporama
   let currentIndex = 0;
   let diaporamaInterval = null;
   let intervalDelay = 3000;
@@ -27,10 +26,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (diaporamaInterval) clearInterval(diaporamaInterval);
     diaporamaInterval = setInterval(() => {
       currentIndex = (currentIndex + 1) % photoList.length;
-      if (photoList[currentIndex] === "accueil.jpg") currentIndex = (currentIndex + 1) % photoList.length;
-      updateLightbox("photos/" + photoList[currentIndex]);
+      if (photoList[currentIndex].url.includes("accueil.jpg")) currentIndex = (currentIndex + 1) % photoList.length;
+      updateLightbox(photoList[currentIndex].url);
     }, intervalDelay);
-    updateLightbox("photos/" + photoList[currentIndex]);
+    updateLightbox(photoList[currentIndex].url);
   }
 
   function stopDiaporama() {
@@ -51,28 +50,26 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (miniaturesDiv && photoList && Array.isArray(photoList)) {
-    photoList.forEach((photo, index) => {
-      if (photo === "accueil.jpg") return;
+    photoList.forEach((photoObj, index) => {
+      if (photoObj.url.includes("accueil.jpg")) return;
 
       const img = document.createElement("img");
-      img.src = "photos/" + photo;
+      img.src = photoObj.thumb;
       img.alt = "Photo du mariage";
       img.classList.add("miniature");
 
-      // Survol = affichage en plus grand
       img.addEventListener("mouseover", () => img.classList.add("zoom"));
       img.addEventListener("mouseout", () => img.classList.remove("zoom"));
 
       img.addEventListener("click", () => {
         currentIndex = index;
-        updateLightbox(img.src);
+        updateLightbox(photoObj.url);
       });
 
       miniaturesDiv.appendChild(img);
     });
   }
 
-  // Boutons de contrôle du diaporama
   const diapoBtn = document.getElementById("diaporama-btn");
   const pauseBtn = document.getElementById("diaporama-pause");
   const lentBtn = document.getElementById("diaporama-lent");
