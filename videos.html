@@ -2,171 +2,73 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Vidéos - Mariage</title>
+  <title>🎥 Vidéos du Mariage</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-    .video-thumbnails {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-    }
-
-    .video-item {
-      cursor: pointer;
-      text-align: center;
-      max-width: 160px;
-    }
-
-    .video-item img {
-      width: 100%;
-      border-radius: 6px;
-      transition: transform 0.3s;
-    }
-
-    .video-item img.vertical {
-      transform: rotate(90deg);
-      transform-origin: center center;
-    }
-
-    .tooltip {
-      position: relative;
-    }
-
-    .tooltip:hover::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      bottom: 105%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: rgba(0, 0, 0, 0.8);
-      color: #fff;
-      padding: 4px 8px;
-      border-radius: 4px;
-      white-space: nowrap;
-      z-index: 10;
-      font-size: 12px;
-    }
-
-    @media (max-width: 600px) {
-      .video-item {
-        max-width: 40%;
-      }
-    }
-
-    #video-modal.hidden {
-      display: none !important;
-    }
-
-    #video-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
-
-    #modal-content {
-      position: relative;
-      max-width: 90%;
-      max-height: 90%;
-    }
-
-    #modal-content video {
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-    }
-
-    #modal-content button {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      font-size: 24px;
-      z-index: 1001;
-      background: none;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-  </style>
 </head>
 <body>
-  <nav>
-    <a href="photos.html">Photos</a> |
-    <a href="videos.html">Vidéos</a> |
-    <a href="commentaires.html">Commentaires</a>
-  </nav>
 
-  <div class="container">
-    <h1>Vidéos du Mariage</h1>
-    <div id="video-container" class="video-thumbnails"></div>
-  </div>
+  <main id="videos-section" class="main-content">
+    <h1>🎥 Vidéos du Mariage</h1>
+    <div id="video-container" class="video-grid"></div>
+  </main>
 
-  <!-- Modale vidéo (cachée par défaut) -->
-  <div id="video-modal" class="hidden">
-    <div id="modal-content">
-      <button onclick="closeModal()">✖</button>
-      <video id="modal-video" controls autoplay>
-        <source src="" type="video/mp4" />
-        Votre navigateur ne prend pas en charge la lecture vidéo.
-      </video>
-    </div>
+  <!-- Vidéo plein écran -->
+  <div id="fullscreen-video" class="fullscreen hidden">
+    <button id="close-video" class="close">✖</button>
+    <video id="main-video" controls autoplay>
+      <source src="" type="video/mp4" />
+      Votre navigateur ne prend pas en charge la vidéo.
+    </video>
   </div>
 
   <script src="videos-data.js"></script>
   <script>
     const container = document.getElementById("video-container");
+    const fullscreen = document.getElementById("fullscreen-video");
+    const video = document.getElementById("main-video");
+    const source = video.querySelector("source");
+    const closeBtn = document.getElementById("close-video");
+    const videosSection = document.getElementById("videos-section");
 
     function displayVideos() {
-      videos.forEach((video) => {
+      videos.forEach((v) => {
         const div = document.createElement("div");
-        div.className = "video-item tooltip";
-        div.setAttribute("data-tooltip", video.tooltip || video.title);
+        div.className = "video-thumb";
+        div.title = v.tooltip || v.title;
 
         const img = document.createElement("img");
-        img.src = video.thumbnail;
-        img.alt = video.title;
+        img.src = v.thumbnail;
+        img.alt = v.title;
+        if (v.vertical) img.classList.add("vertical");
 
-        if (video.vertical) {
-          img.classList.add("vertical");
-        }
-
-        const p = document.createElement("p");
-        p.textContent = video.title;
+        const label = document.createElement("p");
+        label.textContent = v.title;
 
         div.appendChild(img);
-        div.appendChild(p);
-        div.onclick = () => openModal(video.src);
+        div.appendChild(label);
+        div.onclick = () => playFullscreen(v.src);
+
         container.appendChild(div);
       });
     }
 
-    function openModal(videoSrc) {
-      const modal = document.getElementById("video-modal");
-      const video = document.getElementById("modal-video");
-      const source = video.querySelector("source");
-
+    function playFullscreen(videoSrc) {
+      videosSection.classList.add("hidden");
       source.src = videoSrc;
       video.load();
-      modal.classList.remove("hidden");
+      fullscreen.classList.remove("hidden");
     }
 
-    function closeModal() {
-      const modal = document.getElementById("video-modal");
-      const video = document.getElementById("modal-video");
-
+    function closeFullscreen() {
+      fullscreen.classList.add("hidden");
       video.pause();
-      video.querySelector("source").src = "";
+      source.src = "";
       video.load();
-      modal.classList.add("hidden");
+      videosSection.classList.remove("hidden");
     }
 
+    video.addEventListener("ended", closeFullscreen);
+    closeBtn.addEventListener("click", closeFullscreen);
     document.addEventListener("DOMContentLoaded", displayVideos);
   </script>
 </body>
