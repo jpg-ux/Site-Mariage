@@ -6,30 +6,49 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
+
+  <!-- Écran de choix initial -->
+  <div id="start-screen" class="start-screen">
     <h1>Photos de la mairie</h1>
-    <nav class="top-bar">
-      <button id="diaporama-btn">▶️ Diaporama</button>
-      <button id="diaporama-pause">⏸️ Pause</button>
-      <button id="diaporama-lent">🐢 Lent</button>
-      <button id="diaporama-rapide">🐇 Rapide</button>
-      <button onclick="window.location.href='photo.html'">← Retour à toutes les photos</button>
+    <button onclick="location.href='photos.html'">← Retour</button>
+    <button id="start-diapo">▶️ Diaporama</button>
+  </div>
+
+  <!-- Mode miniatures -->
+  <div id="miniature-mode" class="hidden">
+    <header class="topbar">
+      <button id="switch-to-diapo">▶️ Passer en diaporama</button>
+    </header>
+    <main class="main-content">
+      <img src="photos/accueil.jpg" alt="Les mariés" class="grande-photo">
+      <div id="miniatures" class="miniatures"></div>
+      <button id="load-more">Charger plus</button>
+    </main>
+  </div>
+
+  <!-- Mode diaporama -->
+  <div id="diapo-mode" class="hidden">
+    <header class="topbar">
+      <button onclick="location.href='photos.html'">← Retour</button>
+    </header>
+    <main class="gallery">
+      <img id="diapo-img" src="" alt="Diaporama">
+    </main>
+    <nav class="diapo-nav">
+      <button id="prev-photo">🔼</button>
+      <button id="next-photo">🔽</button>
     </nav>
-  </header>
+  </div>
 
-  <main>
-    <div id="miniatures" class="gallery"></div>
+  <!-- Lightbox (optionnelle) -->
+  <div id="lightbox" class="lightbox hidden">
+    <span id="lightbox-close" class="close">✖</span>
+    <img src="" alt="Photo en grand">
+  </div>
 
-    <div id="lightbox" class="lightbox hidden">
-      <span id="lightbox-close" class="close-btn">✖</span>
-      <img src="" alt="Photo en grand">
-    </div>
-  </main>
-
+  <!-- Scripts -->
   <script src="js/photoList-mairie.js"></script>
   <script src="js/lightbox-diapo.js"></script>
+  <script src="js/mairie-interactions.js"></script>
 </body>
 </html>
-
-
-
