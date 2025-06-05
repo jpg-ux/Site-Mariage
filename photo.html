@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Photos du mariage</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      display: flex;
+      flex-direction: row;
+      height: 100vh;
+      background-color: black;
+      color: white;
+      margin: 0;
+    }
+    aside {
+      background: #222;
+      padding: 20px;
+      width: 220px;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+    aside a, aside button {
+      display: block;
+      margin: 10px 0;
+      color: white;
+      background: #444;
+      text-align: center;
+      padding: 10px;
+      text-decoration: none;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    aside a:hover, aside button:hover {
+      background: #666;
+    }
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .main-photo {
+      max-width: 600px;
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(255,255,255,0.2);
+    }
+  </style>
+</head>
+<body>
+  <aside>
+    <button onclick="window.location.href='index.html'">⬅ Retour à l'accueil</button>
+    <a href="mairie.html">📍 Mairie</a>
+    <a href="eglise.html">⛪ Église</a>
+    <a href="vin.html">🥂 Vin d’honneur</a>
+    <a href="fete.html">🎉 Fête</a>
+    <a href="couples.html">💞 Les couples</a>
+  </aside>
+
+  <main>
+    <h1>Bienvenue sur la page Photos</h1>
+    <img src="assets/photomaries.png" alt="Les mariés" class="main-photo">
+  </main>
+</body>
+</html>
