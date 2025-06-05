@@ -269,3 +269,43 @@ button:disabled {
 .hidden {
   display: none !important;
 }
+/* Écran de choix initial */
+.start-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 20px;
+  text-align: center;
+}
+
+/* Navigation verticale diaporama */
+.diapo-nav {
+  position: fixed;
+  top: 50%;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  transform: translateY(-50%);
+  z-index: 1000;
+}
+
+.diapo-nav button {
+  background: #444;
+  color: white;
+  font-size: 1.5em;
+  padding: 10px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.diapo-nav button:hover {
+  background: #666;
+}
+
+.hidden {
+  display: none !important;
+}
