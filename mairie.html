@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>📍 Mairie</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Photos de la mairie</h1>
+    <nav class="top-bar">
+      <button id="diaporama-btn">▶️ Diaporama</button>
+      <button id="diaporama-pause">⏸️ Pause</button>
+      <button id="diaporama-lent">🐢 Lent</button>
+      <button id="diaporama-rapide">🐇 Rapide</button>
+      <button onclick="window.location.href='photo.html'">← Retour à toutes les photos</button>
+    </nav>
+  </header>
+
+  <main>
+    <div id="miniatures" class="gallery"></div>
+
+    <div id="lightbox" class="lightbox hidden">
+      <span id="lightbox-close" class="close-btn">✖</span>
+      <img src="" alt="Photo en grand">
+    </div>
+  </main>
+
+  <script src="js/photoList-mairie.js"></script>
+  <script src="js/lightbox-diapo.js"></script>
+</body>
+</html>
+
+
+
